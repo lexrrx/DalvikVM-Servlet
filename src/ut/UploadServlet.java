@@ -92,21 +92,22 @@ public class UploadServlet extends HttpServlet {
             
             //Executing the class with Dalvik VM
             String fileNameShort = fileName.replaceAll(".java", "");
-            String dir = " /home/ubunu/android-x86/";
-            String command0 = ("cd " + dir + "<br>");
-            out.println("Executing:" + command0);
-            obj.executeCommand(command0);	
-            String command1 = "javac " + fileName;
-            obj.executeCommand(command1);
+            String dir = " /home/ubuntu/android-x86/";
+            out.println("Executing: sh" + "<br>");
+            String command0 = ("sh");
+            String command1 = ("cd" + dir);
             out.println("Executing: " + command1  + "<br>");
-            String command2 = "dx --dex --output = "+ fileNameShort + ".jar  " + fileNameShort + ".class";
-            obj.executeCommand(command2);
+            String command2 = ("javac " + fileName);
             out.println("Executing: " + command2  + "<br>");
-            String command3 = "./rund.sh -cp " + fileName + " " + fileNameShort;
-            obj.executeCommand(command3);
-            out.println("Executing: " + command3 + "<br>");
+            String command3 = ("dx --dex --output = "+ fileNameShort + ".jar  " + fileNameShort + ".class");
+            out.println("Executing: " + command3  + "<br>");
+            String command4 = ("./rund.sh -cp " + fileName + " " + fileNameShort);
+            out.println("Executing: " + command4 + "<br>");
+            String[] commands = {command0, command1,command2,command3,command4};
+            obj.executeCommand(commands);
+   
 
-            
+                
             out.println("Uploaded Filename: " + fileName + "<br>");
          }
       }
@@ -124,8 +125,8 @@ public class UploadServlet extends HttpServlet {
                 getClass( ).getName( )+": POST method required.");
    } 
    
-   public String executeCommand(String command) {
-	   
+   public String executeCommand(String[] command) {
+
 		StringBuffer output = new StringBuffer();
 
 		Process p;
@@ -142,4 +143,5 @@ public class UploadServlet extends HttpServlet {
 		}
 		return output.toString();
 	}
+	
 }
